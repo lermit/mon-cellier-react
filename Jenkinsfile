@@ -1,0 +1,29 @@
+pipeline {
+    agent none
+
+    stages {
+        stage('Prepare') {
+          agent any
+          steps {
+            checkout scm
+          }
+        }
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:20'
+                }
+            }
+            steps {
+                sh "npm install"
+                sh "npm run build"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Simulate deployment"
+            }
+        }
+    }
+}
+
